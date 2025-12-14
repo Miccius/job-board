@@ -2,6 +2,28 @@
 
 use Illuminate\Support\Str;
 
+
+// FORCE MYSQL ON RAILWAY - FIX PER PORCA MISERIA
+if (isset($_ENV['MYSQLHOST']) || isset($_ENV['RAILWAY'])) {
+    // Override database configuration for Railway
+    putenv("DB_CONNECTION=mysql");
+    putenv("DB_HOST=" . ($_ENV['MYSQLHOST'] ?? $_ENV['DB_HOST'] ?? 'localhost'));
+    putenv("DB_PORT=" . ($_ENV['MYSQLPORT'] ?? $_ENV['DB_PORT'] ?? '3306'));
+    putenv("DB_DATABASE=" . ($_ENV['MYSQLDATABASE'] ?? $_ENV['DB_DATABASE'] ?? 'railway'));
+    putenv("DB_USERNAME=" . ($_ENV['MYSQLUSER'] ?? $_ENV['DB_USERNAME'] ?? 'root'));
+    putenv("DB_PASSWORD=" . ($_ENV['MYSQLPASSWORD'] ?? $_ENV['DB_PASSWORD'] ?? ''));
+    
+    // Also set in $_ENV for Laravel
+    $_ENV['DB_CONNECTION'] = 'mysql';
+    $_ENV['DB_HOST'] = $_ENV['MYSQLHOST'] ?? $_ENV['DB_HOST'] ?? 'localhost';
+    $_ENV['DB_PORT'] = $_ENV['MYSQLPORT'] ?? $_ENV['DB_PORT'] ?? '3306';
+    $_ENV['DB_DATABASE'] = $_ENV['MYSQLDATABASE'] ?? $_ENV['DB_DATABASE'] ?? 'railway';
+    $_ENV['DB_USERNAME'] = $_ENV['MYSQLUSER'] ?? $_ENV['DB_USERNAME'] ?? 'root';
+    $_ENV['DB_PASSWORD'] = $_ENV['MYSQLPASSWORD'] ?? $_ENV['DB_PASSWORD'] ?? '';
+}
+
+// ... il resto del file ...
+
 return [
 
     /*
