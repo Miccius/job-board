@@ -2,12 +2,15 @@
 nixPkgs = [
   "php82",
   "php82Extensions.pdo_mysql",
-  "php82Packages.composer"
+  "php82Packages.composer",
+  "nodejs_18"
 ]
 
 [phases.build]
 cmds = [
   "composer install --no-dev --optimize-autoloader",
+  "npm ci",
+  "npm run build",
   "php artisan optimize:clear"
 ]
 
