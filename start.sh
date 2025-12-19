@@ -7,6 +7,9 @@ until php check-db.php; do
 done
 
 php artisan config:clear
+php artisan config:cache
+
+
 php artisan migrate --force
 
 # FINE. NON AVVIARE SERVER
